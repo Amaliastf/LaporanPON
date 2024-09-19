@@ -25,6 +25,14 @@ class ReportController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Report saved successfully.');
     }
+    public function index()
+    {
+        // Ambil semua data dari tabel reports
+        $reports = Report::all();
+
+        // Kembalikan view beserta data laporan
+        return view('reports.index', compact('reports'));
+    }
 }
 
 
