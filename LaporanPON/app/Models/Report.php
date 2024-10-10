@@ -19,8 +19,13 @@ class Report extends Model
         'time_finish', 
         'km_start', 
         'km_finish', 
-        'description'
+        'description',
+        'user_id'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // Jika tidak menggunakan timestamps (created_at, updated_at)
     public $timestamps = false;
