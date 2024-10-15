@@ -28,3 +28,8 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect()->route('login');  // Redirect ke halaman login setelah logout
 })->name('logout');
+
+Route::post('/save-report', [ReportController::class, 'store'])->name('report.store');
+Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+Route::get('/reports/{id}/edit', [ReportController::class, 'edit'])->name('report.edit');
+Route::put('/reports/{id}', [ReportController::class, 'update'])->name('reports.update');

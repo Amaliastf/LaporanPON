@@ -48,6 +48,11 @@
             border-color: #c3e6cb;
             color: #155724;
         }
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
@@ -76,38 +81,51 @@
             </div>
         @endif
 
+        <!-- Tampilkan pesan error jika ada -->
+        <div id="error-message" class="alert alert-danger d-none"></div>
+
         <!-- Jika data kosong -->
         @if ($reports->isEmpty())
             <div class="alert alert-warning">Data tidak ditemukan.</div>
         @else
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Time Start</th>
-                        <th>Time Finish</th>
-                        <th>KM Start</th>
-                        <th>KM Finish</th>
-                        <th>Description</th>
-                        <th>User</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($reports as $index => $report)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $report->tanggal }}</td>
-                            <td>{{ $report->time_start }}</td>
-                            <td>{{ $report->time_finish }}</td>
-                            <td>{{ $report->km_start }}</td>
-                            <td>{{ $report->km_finish }}</td>
-                            <td>{{ $report->description ?? '-' }}</td>
-                            <td>{{ $report->user->name ?? 'Unknown' }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>Time Start</th>
+                <th>Time Finish</th>
+                <th>KM Start</th>
+                <th>KM Finish</th>
+                <th>Description</th>
+                <th>User</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($reports as $index => $report)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $report->tanggal }}</td>
+                    <td>{{ $report->time_start }}</td>
+                    <td>{{ $report->time_finish ?? '-' }}</td>
+                    <td>{{ $report->km_start }}</td>
+                    <td>{{ $report->km_finish ?? '-' }}</td>
+                    <td>{{ $report->description ?? '-' }}</td>
+                    <td>{{ $report->user->name ?? 'Unknown' }}</td>
+                    <td>
+                        @if(is_null($report->time_finish) || is_null($report->km_finish))
+                            <button class="btn btn-sm btn-warning update-btn"
+                                    data-report-user="{{ $report->user_id }}"
+                                    data-report-id="{{ $report->id }}">Update</button>
+                        @else
+                            <span class="text-muted">Updated</span>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+        </table>
         @endif
 
         <!-- Tombol kembali ke halaman form -->
@@ -115,5 +133,28 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentUserId = {{ Auth::id() }}; // ID user yang sedang login
+
+            document.querySelectorAll('.update-btn').forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    const reportUserId = this.getAttribute('data-report-user');
+                    const reportId = this.getAttribute('data-report-id');
+
+                    // Cek apakah user yang login adalah pemilik laporan
+                    if (reportUserId != currentUserId) {
+                        event.preventDefault(); // Cegah pengalihan halaman
+                        const errorMessage = document.getElementById('error-message');
+                        errorMessage.textContent = 'You are not authorized to edit this report.';
+                        errorMessage.classList.remove('d-none'); // Tampilkan pesan error
+                    } else {
+                        window.location.href = `/reports/${reportId}/edit`; // Arahkan ke halaman edit
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

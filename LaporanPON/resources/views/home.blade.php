@@ -127,68 +127,70 @@
       @endif
 
       <form action="/save-report" method="POST">
-        @csrf
+    @csrf
 
-        <!-- Tanggal Field (Autoset) -->
-        <div class="mb-2">
-          <label for="tanggal" class="form-label">Date</label>
-          <div class="input-group">
+    <!-- Tanggal Field (Autoset) -->
+    <div class="mb-2">
+        <label for="tanggal" class="form-label">Date</label>
+        <div class="input-group">
             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
             <input id="tanggal" type="date" class="form-control" name="tanggal" required>
-          </div>
         </div>
+    </div>
 
-        <!-- Time Start and Time Finish -->
-        <div class="mb-2 row">
-          <div class="col-md-6">
+    <!-- Time Start and Time Finish -->
+    <div class="mb-2 row">
+        <div class="col-md-6">
             <label for="time_start" class="form-label">Time Start</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-clock"></i></span>
-              <input id="time_start" type="time" class="form-control" name="time_start" required>
+                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                <input id="time_start" type="time" class="form-control" name="time_start" required>
             </div>
-          </div>
-          <div class="col-md-6">
+        </div>
+
+        <div class="col-md-6">
             <label for="time_finish" class="form-label">Time Finish</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-clock"></i></span>
-              <input id="time_finish" type="time" class="form-control" name="time_finish" required>
+                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                <input id="time_finish" type="time" class="form-control" name="time_finish" disabled>
             </div>
-          </div>
         </div>
+    </div>
 
-        <!-- KM Start and KM Finish -->
-        <div class="mb-2 row">
-          <div class="col-md-6">
+    <!-- KM Start and KM Finish -->
+    <div class="mb-2 row">
+        <div class="col-md-6">
             <label for="km_start" class="form-label">KM Start</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-road"></i></span>
-              <input id="km_start" type="number" class="form-control" name="km_start" required>
+                <span class="input-group-text"><i class="fas fa-road"></i></span>
+                <input id="km_start" type="number" class="form-control" name="km_start" required>
             </div>
-          </div>
-          <div class="col-md-6">
+        </div>
+
+        <div class="col-md-6">
             <label for="km_finish" class="form-label">KM Finish</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-road"></i></span>
-              <input id="km_finish" type="number" class="form-control" name="km_finish" required>
+                <span class="input-group-text"><i class="fas fa-road"></i></span>
+                <input id="km_finish" type="number" class="form-control" name="km_finish" disabled>
             </div>
-          </div>
         </div>
+    </div>
 
-        <!-- Description Field -->
-        <div class="mb-2">
-          <label for="description" class="form-label">Description</label>
-          <div class="input-group">
+    <!-- Description Field -->
+    <div class="mb-2">
+        <label for="description" class="form-label">Description</label>
+        <div class="input-group">
             <span class="input-group-text"><i class="fas fa-edit"></i></span>
             <textarea id="description" class="form-control" name="description" rows="3"></textarea>
-          </div>
         </div>
+    </div>
 
-        <!-- Submit Button and View Report Button in One Row -->
-        <div class="d-flex justify-content-center gap-2">
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <a href="{{ route('reports.index') }}" class="btn btn-primary">Lihat Laporan</a>
-        </div>
-      </form>
+    <div class="d-flex justify-content-center gap-2">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{{ route('reports.index') }}" class="btn btn-primary">Lihat Laporan</a>
+    </div>
+</form>
+
     </div>
 
     <!-- Script to Autoset the Date -->

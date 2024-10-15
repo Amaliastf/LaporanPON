@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Laporan PON</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      /* Background Gradient */
+      body {
+        background: linear-gradient(135deg, #6dd5fa, #2980b9);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+      }
+
+      h1 {
+        color: #fff;
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+
+      .form-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .form-container h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #444;
+      }
+
+      .form-control {
+        border-radius: 8px;
+        padding: 8px;
+        font-size: 0.9rem;
+        border: 1px solid #ddd;
+      }
+
+      .btn-primary {
+        background-color: #2980b9;
+        border: none;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 6px rgba(41, 128, 185, 0.3);
+      }
+
+      .btn-primary:hover {
+        background-color: #1f618d;
+      }
+
+      .input-group-text {
+        background-color: #2980b9;
+        color: white;
+        border: none;
+        border-radius: 8px 0 0 8px;
+        padding: 8px 12px;
+      }
+
+      /* Adjust form layout on smaller screens */
+      @media (max-width: 576px) {
+        .form-container {
+          padding: 15px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Edit Laporan</h1>
+
+      <form action="{{ route('reports.update', $report->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <!-- Tanggal Field (Disabled) -->
+        <div class="mb-2">
+          <label for="tanggal" class="form-label">Tanggal</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+            <input id="tanggal" type="date" class="form-control" value="{{ $report->tanggal }}" disabled>
+          </div>
+        </div>
+
+        <!-- Time Start and Time Finish -->
+        <div class="mb-2 row">
+          <div class="col-md-6">
+            <label for="time_start" class="form-label">Time Start</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-clock"></i></span>
+              <input id="time_start" type="time" class="form-control" value="{{ $report->time_start }}" disabled>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="time_finish" class="form-label">Time Finish</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-clock"></i></span>
+              <input id="time_finish" type="time" class="form-control" name="time_finish" value="{{ $report->time_finish }}" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- KM Start and KM Finish -->
+        <div class="mb-2 row">
+          <div class="col-md-6">
+            <label for="km_start" class="form-label">KM Start</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-road"></i></span>
+              <input id="km_start" type="number" class="form-control" value="{{ $report->km_start }}" disabled>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="km_finish" class="form-label">KM Finish</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-road"></i></span>
+              <input id="km_finish" type="number" class="form-control" name="km_finish" value="{{ $report->km_finish }}" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-2">
+          <label for="description" class="form-label">Description</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-edit"></i></span>
+            <textarea id="description" class="form-control" name="description" rows="3">{{ $report->description }}</textarea>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2">
+          <button type="submit" class="btn btn-primary">Update</button>
+          <a href="{{ route('reports.index') }}" class="btn btn-primary">Lihat Laporan</a>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
